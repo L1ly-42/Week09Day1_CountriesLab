@@ -1,4 +1,6 @@
 import Country from "./Country";
+import './CountryList.css'
+
 
 
 
@@ -11,7 +13,10 @@ const CountryList = ({title, countries, handleVisitedCountry, buttonLabel}) => {
     return (
         <>
         <h2>{title} </h2>
-        {mappedCountries}   
+        <div className='list'>
+           {mappedCountries}   
+        </div>
+
         </>
 
 

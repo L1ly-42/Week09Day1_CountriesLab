@@ -9,11 +9,11 @@ const Country = ({country, handleVisitedCountry, buttonLabel}) => {
     return (
 
         <div className='country'>
-        <h3>{country.name.official} </h3>
-        <p>Capital: {country.capital} </p>
-        <p> Region: {country.region}</p>
-        <img src = {country.flags.png} alt="" />
-        <button id='button' type="button" onClick={handleClick}>{buttonLabel}</button>
+            <h3>{country.name.official} </h3>
+            <p>Capital: {country.capital} </p>
+            <p> Region: {country.region}</p>
+            <img src = {country.flags.png} alt="" />
+            <button id='button' type="button" onClick={handleClick}>{buttonLabel}</button>
 
         </div>
     

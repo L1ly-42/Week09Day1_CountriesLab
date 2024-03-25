@@ -6,6 +6,8 @@ import './CountryContainer.css';
 
 const CountryContainer = () => {
 
+
+    //UseStates
     const [countries, setCountries] = useState(null);
     const[visitedCountries, setVisitedCountries] = useState(null)
 
@@ -45,7 +47,6 @@ const CountryContainer = () => {
         }
 
         //Functions for moving Visited country back to main list
-
         const unVisitCountry = (countryToUnvisit) =>{
             removeCountryFromVisitedList(countryToUnvisit);
             if(countries == null){
@@ -53,14 +54,11 @@ const CountryContainer = () => {
             }
             else{
             setCountries([...countries, countryToUnvisit]);
-            }
-        }
+            };
+        };
 
 
-
-
-        //Functions that Handle Country deletion from different lists 
-
+        //Functions that handles deletion of the countries from the lists 
         const removeCountryFromMainList = (countryToRemove) => {
             const countryIndex = countries.indexOf(countryToRemove);
             countries.splice(countryIndex, 1);
@@ -72,8 +70,6 @@ const CountryContainer = () => {
         visitedCountries.splice(countryIndex, 1);
         setVisitedCountries([...visitedCountries]);    
     }
-
-
 
 
     return (

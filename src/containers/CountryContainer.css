@@ -1,10 +1,15 @@
 .countryContainer{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     width: 90%;
+    padding: auto;
     
 }
 
 .visitedCountryList, .countryList {
     text-align: center;
+    width: 70%;
+    align-items: center;
+    padding-left: 130px;
 }
+
+
