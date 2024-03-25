@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import CountryList from "../components/CountryList";
+import './CountryContainer.css';
+
+
 
 const CountryContainer = () => {
 
@@ -24,14 +27,25 @@ const CountryContainer = () => {
 
 
     return (
-        <>
-           {countries ? <CountryList title= 'Countries' countries={countries}/>
+        <div className='countryContainer'>
+        <div className='countryList'>
+
+        {countries ? <CountryList title= 'Countries:' countries={countries} onButtonClick='addVisitorCountry'/>
            : <p>Loading</p>}
 
-           {visitedCountries ? <CountryList title= 'Visited Countries' countries={visitedCountries}/>
-           : <h2>Visited Countries</h2>}
 
-        </>
+        </div>
+
+        <div className='visitedCountryList'>
+
+           {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries}/>
+           : <h2>Visited Countries:</h2>}
+
+        </div>
+     
+
+
+        </div>
     ); 
 };
 
