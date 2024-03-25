@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CountryList from "../components/CountryList";
 import './CountryContainer.css';
+import SearchForm from "../components/SearchTerm";
 
 
 
@@ -9,7 +10,8 @@ const CountryContainer = () => {
 
     //UseStates
     const [countries, setCountries] = useState(null);
-    const[visitedCountries, setVisitedCountries] = useState(null)
+    const [filteredCountries, setFilteredCountries] = useState(null);
+    const[visitedCountries, setVisitedCountries] = useState(null);
 
      //fetching data 
      const loadCountries = async() =>{
@@ -71,25 +73,33 @@ const CountryContainer = () => {
         setVisitedCountries([...visitedCountries]);    
     }
 
+    //EXTENSION - loads filtered data
 
+    const filterCountries = async(searchTerm) => {
+        const response = await fetch(`https://restcountries.com/v3.1/name/${searchTerm}`);
+        const filteredJsonData = await response.json();
+        setFilteredCountries(filteredJsonData);
+        console.log(filteredCountries);
+    }
+        
     return (
         <div className='countryContainer'>
-        <div className='countryList'>
+                <div className='form'>
+                <SearchForm filterCountries={filterCountries} />
+            </div>
+            <div className='countryList'>
+            {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+            : <></>}
+            {!filteredCountries && countries? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+            : <></>}
+            </div>
 
-        {countries ? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-           : <p>Loading</p>}
+            <div className='visitedCountryList'>
 
+            {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
+            : <h2>Visited Countries:</h2>}
 
-        </div>
-
-        <div className='visitedCountryList'>
-
-           {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
-           : <h2>Visited Countries:</h2>}
-
-        </div>
-     
-
+           </div>
 
         </div>
     ); 
