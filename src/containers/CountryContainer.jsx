@@ -4,6 +4,7 @@ import CountryList from "../components/CountryList";
 const CountryContainer = () => {
 
     const [countries, setCountries] = useState(null);
+    const[visitedCountries, setVisitedCountries] = useState(null)
 
      //fetching data 
      const loadCountries = async() =>{
@@ -21,12 +22,20 @@ const CountryContainer = () => {
         console.log(countries);
     },[countries]);
 
+
     return (
         <>
-            {JSON.stringify(countries)}
+           {countries ? <CountryList title= 'Countries' countries={countries}/>
+           : <p>Loading</p>}
+
+           {visitedCountries ? <CountryList title= 'Visited Countries' countries={visitedCountries}/>
+           : <h2>Visited Countries</h2>}
+
         </>
     ); 
 };
+
+
 
 export default CountryContainer;
 
