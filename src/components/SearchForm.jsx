@@ -1,16 +1,22 @@
 import { useState } from "react";
 
-const SearchForm = ( {filterCountries}) => {
+const SearchForm = ( {setFilteredCountries, filterCountries}) => {
 
     //UseStates
     const [searchTerm,setSearchTerm] = useState("")
 
-    //Function that filters cake by the search term
+    //Function that filters country by the search term
     const submitSearch = (e) => {
-        e.preventDefault()
-        filterCountries(searchTerm);
-        console.log(searchTerm);
+        e.preventDefault();
+        if(searchTerm && searchTerm !=' '){
+            filterCountries(searchTerm);
+        }
+        setFilteredCountries(null);
+        
+       
+
     }
+
 
 
     return ( 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CountryList from "../components/CountryList";
 import './CountryContainer.css';
-import SearchForm from "../components/SearchTerm";
+import SearchForm from "../components/SearchForm";
 
 
 
@@ -38,8 +38,27 @@ const CountryContainer = () => {
 
         //Functions for adding a new country to the visited country list
          const VisitCountry = (visitedCountry) => {
+
+           // scenarios where button is pressed from filtered list
+            if(visitedCountries == null && filteredCountries){
+
+                const countryIndex = filteredCountries.indexOf(visitedCountry);
+                filteredCountries.splice(countryIndex, 1);
+                setFilteredCountries([...filteredCountries])
+
+                setVisitedCountries([visitedCountry]);
+            }
+            if(filteredCountries){
+                const countryIndex = filteredCountries.indexOf(visitedCountry);
+                filteredCountries.splice(countryIndex, 1);
+                setFilteredCountries([...filteredCountries])
+
+                setVisitedCountries([...visitedCountries, visitedCountry]);
+            }
+
+            //scenarios where button is pressed from unfiltered list
             removeCountryFromMainList(visitedCountry);
-    
+
             if(visitedCountries == null){
                 setVisitedCountries([visitedCountry]);
             }
@@ -85,7 +104,7 @@ const CountryContainer = () => {
     return (
         <div className='countryContainer'>
                 <div className='form'>
-                <SearchForm filterCountries={filterCountries} />
+                <SearchForm filterCountries={filterCountries} setFilteredCountries={setFilteredCountries} />
             </div>
             <div className='countryList'>
             {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
