@@ -21,16 +21,66 @@ const CountryContainer = () => {
         loadCountries();
     }, []);
 
-    useEffect(() =>{
-        console.log(countries);
-    },[countries]);
+
+        //Function for handling the country list toggling
+        const handleVisitedCountry = (country) => {
+
+            if(countries.includes(country)){
+                VisitCountry(country);
+            } else {unVisitCountry(country);}
+             
+        }
+
+
+        //Functions for adding a new country to the visited country list
+         const VisitCountry = (visitedCountry) => {
+            removeCountryFromMainList(visitedCountry);
+    
+            if(visitedCountries == null){
+                setVisitedCountries([visitedCountry]);
+            }
+            else{
+            setVisitedCountries([...visitedCountries, visitedCountry]);
+            }
+        }
+
+        //Functions for moving Visited country back to main list
+
+        const unVisitCountry = (countryToUnvisit) =>{
+            removeCountryFromVisitedList(countryToUnvisit);
+            if(countries == null){
+                setCountries([countryToUnvisit]);
+            }
+            else{
+            setCountries([...countries, countryToUnvisit]);
+            }
+        }
+
+
+
+
+        //Functions that Handle Country deletion from different lists 
+
+        const removeCountryFromMainList = (countryToRemove) => {
+            const countryIndex = countries.indexOf(countryToRemove);
+            countries.splice(countryIndex, 1);
+            setCountries([...countries]);
+        }
+
+        const removeCountryFromVisitedList = (countryToRemove) => {
+        const countryIndex = visitedCountries.indexOf(countryToRemove);
+        visitedCountries.splice(countryIndex, 1);
+        setVisitedCountries([...visitedCountries]);    
+    }
+
+
 
 
     return (
         <div className='countryContainer'>
         <div className='countryList'>
 
-        {countries ? <CountryList title= 'Countries:' countries={countries} onButtonClick='addVisitorCountry'/>
+        {countries ? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
            : <p>Loading</p>}
 
 
@@ -38,7 +88,7 @@ const CountryContainer = () => {
 
         <div className='visitedCountryList'>
 
-           {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries}/>
+           {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
            : <h2>Visited Countries:</h2>}
 
         </div>

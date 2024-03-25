@@ -1,11 +1,10 @@
 import './Country.css'
 
-const Country = ({country}) => {
+const Country = ({country, handleVisitedCountry, buttonLabel}) => {
 
     const handleClick = () => {
-        console.log('clicked');
-    }
-
+            handleVisitedCountry(country);    
+        }
 
     return (
 
@@ -14,10 +13,7 @@ const Country = ({country}) => {
         <p>Capital: {country.capital} </p>
         <p> Region: {country.region}</p>
         <img src = {country.flags.png} alt="" />
-
-
-        <input type="checkbox" id="checkbox" name='checkbox' onClick={handleClick}/>
-       
+        <button id='button' type="button" onClick={handleClick}>{buttonLabel}</button>
 
         </div>
     
