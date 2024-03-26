@@ -13,7 +13,7 @@ const CountryContainer = () => {
     const [filteredCountries, setFilteredCountries] = useState(null);
     const[visitedCountries, setVisitedCountries] = useState(null);
 
-     //fetching data 
+     //fetching data  
      const loadCountries = async() =>{
         const response = await fetch('https://restcountries.com/v3.1/all');
         const jsonData = await response.json();
@@ -29,36 +29,26 @@ const CountryContainer = () => {
         //Function for handling the country list toggling
         const handleVisitedCountry = (country) => {
 
-            if(countries.includes(country)){
+            if(countries.includes(country) || (filteredCountries && filteredCountries.includes(country))){
                 VisitCountry(country);
-            } else {unVisitCountry(country);}
-             
-        }
+            } else {unVisitCountry(country);
+            };
+        };
+            
+        
 
-
-        //Functions for adding a new country to the visited country list
+        //Function for adding a new country to the visited country list
          const VisitCountry = (visitedCountry) => {
 
-           // scenarios where button is pressed from filtered list
-            if(visitedCountries == null && filteredCountries){
-
-                const countryIndex = filteredCountries.indexOf(visitedCountry);
-                filteredCountries.splice(countryIndex, 1);
-                setFilteredCountries([...filteredCountries])
-
-                setVisitedCountries([visitedCountry]);
-            }
+           // checking which list (filtered or unfiltered) to remove country from
             if(filteredCountries){
-                const countryIndex = filteredCountries.indexOf(visitedCountry);
-                filteredCountries.splice(countryIndex, 1);
-                setFilteredCountries([...filteredCountries])
-
-                setVisitedCountries([...visitedCountries, visitedCountry]);
+                removeCountryFromFilteredlist(visitedCountry);
+            }
+            if(countries){
+                removeCountryFromMainList(visitedCountry);
             }
 
-            //scenarios where button is pressed from unfiltered list
-            removeCountryFromMainList(visitedCountry);
-
+            //adding country to the visited list
             if(visitedCountries == null){
                 setVisitedCountries([visitedCountry]);
             }
@@ -70,6 +60,16 @@ const CountryContainer = () => {
         //Functions for moving Visited country back to main list
         const unVisitCountry = (countryToUnvisit) =>{
             removeCountryFromVisitedList(countryToUnvisit);
+
+            if(filteredCountries){
+                if(filteredCountries == null){
+                    setFilteredCountries([countryToUnvisit]);
+                }
+                else{
+                setFilteredCountries([...filteredCountries, countryToUnvisit]);
+                };
+            };
+
             if(countries == null){
                 setCountries([countryToUnvisit]);
             }
@@ -90,6 +90,14 @@ const CountryContainer = () => {
         const countryIndex = visitedCountries.indexOf(countryToRemove);
         visitedCountries.splice(countryIndex, 1);
         setVisitedCountries([...visitedCountries]);    
+    }
+
+    const removeCountryFromFilteredlist = (countryToRemove) => {
+        if(filteredCountries){
+            const countryIndex = filteredCountries.indexOf(countryToRemove);
+            filteredCountries.splice(countryIndex, 1);
+            setFilteredCountries([...filteredCountries])
+        };
     }
 
     //EXTENSION - loads filtered data

@@ -8,11 +8,11 @@ const SearchForm = ( {setFilteredCountries, filterCountries}) => {
     //Function that filters country by the search term
     const submitSearch = (e) => {
         e.preventDefault();
-        if(searchTerm && searchTerm !=' '){
+        if(searchTerm && searchTerm !==' '){
             filterCountries(searchTerm);
         }
         setFilteredCountries(null);
-        
+
        
 
     }
