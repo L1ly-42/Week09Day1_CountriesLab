@@ -110,25 +110,26 @@ const CountryContainer = () => {
     }
         
     return (
-        <div className='countryContainer'>
-                <div className='form'>
+        <>
+            <div className='form'>
                 <SearchForm filterCountries={filterCountries} setFilteredCountries={setFilteredCountries} />
             </div>
-            <div className='countryList'>
-            {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-            : <></>}
-            {!filteredCountries && countries? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-            : <></>}
+            <div className='countryContainer'>
+            
+                <div className='countryList'>
+                    {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+                    : <></>}
+                    {!filteredCountries && countries? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+                    : <></>}
+                </div>
+
+                <div className='visitedCountryList'>
+                    {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
+                    : <h2>Visited Countries:</h2>}
+                </div>
+
             </div>
-
-            <div className='visitedCountryList'>
-
-            {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
-            : <h2>Visited Countries:</h2>}
-
-           </div>
-
-        </div>
+     </>
     ); 
 };
 

@@ -13,8 +13,6 @@ const SearchForm = ( {setFilteredCountries, filterCountries}) => {
         }
         setFilteredCountries(null);
 
-       
-
     }
 
 
