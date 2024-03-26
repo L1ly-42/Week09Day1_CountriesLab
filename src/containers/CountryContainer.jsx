@@ -117,15 +117,15 @@ const CountryContainer = () => {
             <div className='countryContainer'>
             
                 <div className='countryList'>
-                    {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+                    {filteredCountries ? <CountryList title= '(Filtered) Still to Visit:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
                     : <></>}
-                    {!filteredCountries && countries? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+                    {!filteredCountries && countries? <CountryList title= 'Still to Visit:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
                     : <></>}
                 </div>
 
                 <div className='visitedCountryList'>
-                    {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
-                    : <h2>Visited Countries:</h2>}
+                    {visitedCountries ? <CountryList title= 'Visited:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
+                    : <h2>Visited:</h2>}
                 </div>
 
             </div>
