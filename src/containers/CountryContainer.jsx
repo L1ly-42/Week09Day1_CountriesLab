@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CountryList from "../components/CountryList";
 import './CountryContainer.css';
+import SearchForm from "../components/SearchForm";
 
 
 
@@ -9,9 +10,10 @@ const CountryContainer = () => {
 
     //UseStates
     const [countries, setCountries] = useState(null);
-    const[visitedCountries, setVisitedCountries] = useState(null)
+    const [filteredCountries, setFilteredCountries] = useState(null);
+    const[visitedCountries, setVisitedCountries] = useState(null);
 
-     //fetching data 
+     //fetching data  
      const loadCountries = async() =>{
         const response = await fetch('https://restcountries.com/v3.1/all');
         const jsonData = await response.json();
@@ -27,17 +29,26 @@ const CountryContainer = () => {
         //Function for handling the country list toggling
         const handleVisitedCountry = (country) => {
 
-            if(countries.includes(country)){
+            if(countries.includes(country) || (filteredCountries && filteredCountries.includes(country))){
                 VisitCountry(country);
-            } else {unVisitCountry(country);}
-             
-        }
+            } else {unVisitCountry(country);
+            };
+        };
+            
+        
 
-
-        //Functions for adding a new country to the visited country list
+        //Function for adding a new country to the visited country list
          const VisitCountry = (visitedCountry) => {
-            removeCountryFromMainList(visitedCountry);
-    
+
+           // checking which list (filtered or unfiltered) to remove country from
+            if(filteredCountries){
+                removeCountryFromFilteredlist(visitedCountry);
+            }
+            if(countries){
+                removeCountryFromMainList(visitedCountry);
+            }
+
+            //adding country to the visited list
             if(visitedCountries == null){
                 setVisitedCountries([visitedCountry]);
             }
@@ -49,6 +60,16 @@ const CountryContainer = () => {
         //Functions for moving Visited country back to main list
         const unVisitCountry = (countryToUnvisit) =>{
             removeCountryFromVisitedList(countryToUnvisit);
+
+            if(filteredCountries){
+                if(filteredCountries == null){
+                    setFilteredCountries([countryToUnvisit]);
+                }
+                else{
+                setFilteredCountries([...filteredCountries, countryToUnvisit]);
+                };
+            };
+
             if(countries == null){
                 setCountries([countryToUnvisit]);
             }
@@ -71,25 +92,41 @@ const CountryContainer = () => {
         setVisitedCountries([...visitedCountries]);    
     }
 
+    const removeCountryFromFilteredlist = (countryToRemove) => {
+        if(filteredCountries){
+            const countryIndex = filteredCountries.indexOf(countryToRemove);
+            filteredCountries.splice(countryIndex, 1);
+            setFilteredCountries([...filteredCountries])
+        };
+    }
 
+    //EXTENSION - loads filtered data
+
+    const filterCountries = async(searchTerm) => {
+        const response = await fetch(`https://restcountries.com/v3.1/name/${searchTerm}`);
+        const filteredJsonData = await response.json();
+        setFilteredCountries(filteredJsonData);
+        console.log(filteredCountries);
+    }
+        
     return (
         <div className='countryContainer'>
-        <div className='countryList'>
+                <div className='form'>
+                <SearchForm filterCountries={filterCountries} setFilteredCountries={setFilteredCountries} />
+            </div>
+            <div className='countryList'>
+            {filteredCountries ? <CountryList title= 'Filtered Countries:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+            : <></>}
+            {!filteredCountries && countries? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+            : <></>}
+            </div>
 
-        {countries ? <CountryList title= 'All Countries:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-           : <p>Loading</p>}
+            <div className='visitedCountryList'>
 
+            {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
+            : <h2>Visited Countries:</h2>}
 
-        </div>
-
-        <div className='visitedCountryList'>
-
-           {visitedCountries ? <CountryList title= 'Visited Countries:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
-           : <h2>Visited Countries:</h2>}
-
-        </div>
-     
-
+           </div>
 
         </div>
     ); 
