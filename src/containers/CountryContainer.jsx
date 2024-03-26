@@ -9,9 +9,9 @@ const CountryContainer = () => {
 
 
     //UseStates
-    const [countries, setCountries] = useState(null);
-    const [filteredCountries, setFilteredCountries] = useState(null);
-    const[visitedCountries, setVisitedCountries] = useState(null);
+    const [countries, setCountries] = useState([]);
+    const [filteredCountries, setFilteredCountries] = useState([]);
+    const[visitedCountries, setVisitedCountries] = useState([]);
 
      //fetching data  
      const loadCountries = async() =>{
@@ -119,15 +119,14 @@ const CountryContainer = () => {
           </header>
           <main>
                 <div className='countryList'>
-                    {filteredCountries ? <CountryList title= '(Filtered) Still to Visit:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-                    : <></>}
-                    {!filteredCountries && countries? <CountryList title= 'Still to Visit:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
-                    : <></>}
+                    <CountryList title= '(Filtered) Still to Visit:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+                    <CountryList title= 'Still to Visit:' countries={countries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
+           
                 </div>
 
                 <div className='visitedCountryList'>
-                    {visitedCountries ? <CountryList title= 'Visited:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
-                    : <h2>Visited:</h2>}
+                  <CountryList title= 'Visited:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
+             
                 </div>
             </main>
      </>
