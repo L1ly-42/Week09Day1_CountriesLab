@@ -1,8 +1,6 @@
+/* Ensures there is a gap between the Country cards */
 .list{
     display: grid;
     gap: 30px;
 }
 
-h2 {
-    color: #113f67;
-}

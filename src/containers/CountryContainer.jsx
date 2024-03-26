@@ -111,11 +111,13 @@ const CountryContainer = () => {
         
     return (
         <>
-            <div className='form'>
+          <header>
+             <h1>Countries Bucket List</h1>
+             <div className='form'>
                 <SearchForm filterCountries={filterCountries} setFilteredCountries={setFilteredCountries} />
-            </div>
-            <div className='countryContainer'>
-            
+             </div>
+          </header>
+          <main>
                 <div className='countryList'>
                     {filteredCountries ? <CountryList title= '(Filtered) Still to Visit:' countries={filteredCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Visited!'/>
                     : <></>}
@@ -127,8 +129,7 @@ const CountryContainer = () => {
                     {visitedCountries ? <CountryList title= 'Visited:' countries={visitedCountries} handleVisitedCountry={handleVisitedCountry} buttonLabel='Not actually visited...'/>
                     : <h2>Visited:</h2>}
                 </div>
-
-            </div>
+            </main>
      </>
     ); 
 };
